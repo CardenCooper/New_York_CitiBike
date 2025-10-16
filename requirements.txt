@@ -1,9 +1,14 @@
+# Streamlit
 streamlit==1.29.0
-pandas==2.1.0
-numpy==1.26.0
-plotly==5.18.0
-matplotlib==3.8.0
-Pillow==10.0.0
-numerize==0.3.4
-keplergl==0.3.2
-streamlit-keplergl==0.1.7
+
+# Core data packages
+pandas>=2.1
+numpy>=1.26
+plotly>=5.18
+matplotlib>=3.8
+Pillow>=10.0
+
+# Dashboard utilities (PyPI versions)
+numerize>=0.3.4
+keplergl>=0.3.2
+streamlit-keplergl>=0.1.7
