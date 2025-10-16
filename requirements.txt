@@ -1,9 +1,16 @@
-streamlit
-pandas
-numpy
-plotly
-matplotlib
-Pillow
-numerize
-streamlit-keplergl
-keplergl
+# Core packages
+streamlit>=1.30
+pandas>=2.1
+numpy>=1.26
+plotly>=5.18
+matplotlib>=3.8
+Pillow>=10.0
+
+# Dashboard utilities
+# Installing numerize from GitHub to avoid pip wheel issues
+git+https://github.com/JackMcKew/numerize.git
+
+# KeplerGL for Streamlit
+# streamlit-keplergl requires keplergl, installing both from GitHub ensures compatibility
+git+https://github.com/keplergl/kepler.gl.git#subdirectory=keplergl
+git+https://github.com/uber/streamlit-keplergl.git
