@@ -1,14 +1,14 @@
-# Stable Streamlit
+# Streamlit
 streamlit==1.29.0
 
 # Core data packages
-pandas
-numpy
-plotly
-matplotlib
-Pillow
+pandas>=2.1
+numpy>=1.26
+plotly>=5.18
+matplotlib>=3.8
+Pillow>=10.0
 
-# Dashboard utilities installed from GitHub to avoid wheel/build issues
-git+https://github.com/JackMcKew/numerize.git
-git+https://github.com/keplergl/kepler.gl.git#subdirectory=keplergl
-git+https://github.com/uber/streamlit-keplergl.git
+# Dashboard utilities (PyPI versions)
+numerize>=0.3.4
+keplergl>=0.3.2
+streamlit-keplergl>=0.1.7
