@@ -264,5 +264,5 @@ elif page == 'Recommendations':
     st.markdown("- Add extra bikes to stations in the Jersey City and Hoboken areas as those seems to be hotspots for trips.")
 
 else:
-    # Friendly fallback — shouldn't normally happen
+    # Friendly fallback — shouldn't normally happen.
     st.write("Please select a page from the sidebar.")
