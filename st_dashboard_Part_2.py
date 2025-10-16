@@ -38,18 +38,9 @@ page = st.sidebar.selectbox(
 
 ########################################### Import data ###########################################################################################
 
-# Primary dataset used by the dashboard
-try:
-    df = pd.read_csv('reduced_data_to_plot_7.csv', index_col=0)
-except FileNotFoundError:
-    st.error("Could not find 'reduced_data_to_plot_7.csv' in working directory.")
-    st.stop()
+df = pd.read_csv('reduced_data_to_plot_7.csv')
+top20_csv = pd.read_csv('top20.csv')
 
-# Optional precomputed top20 CSV (we will prefer computing top20 from df for filters)
-try:
-    top20_csv = pd.read_csv('top20.csv', index_col=0)
-except Exception:
-    top20_csv = None
 
 ######################################### DEFINE THE PAGES #####################################################################
 
