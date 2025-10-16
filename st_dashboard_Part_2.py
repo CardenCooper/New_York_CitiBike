@@ -1,6 +1,9 @@
 ################################################ CITI BIKE DASHBOARD ##########################################################################
 
 import streamlit as st
+
+st.cache_data.clear()       # clears cached data
+st.cache_resource.clear()   # clears cached resources like figures/models
 import pandas as pd
 import numpy as np
 from plotly.subplots import make_subplots
