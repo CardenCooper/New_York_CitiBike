@@ -5,3 +5,5 @@ plotly
 matplotlib
 Pillow
 numerize
+streamlit-keplergl
+keplergl
