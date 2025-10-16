@@ -6,11 +6,17 @@ import numpy as np
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import matplotlib.pyplot as plt
-from streamlit_keplergl import keplergl_static
-from keplergl import KeplerGl
 from datetime import datetime as dt
 from numerize.numerize import numerize
 from PIL import Image
+
+# --- Try importing KeplerGL safely ---
+try:
+    from streamlit_keplergl import keplergl_static
+    from keplergl import KeplerGl
+    kepler_available = True
+except ModuleNotFoundError:
+    kepler_available = False
 
 ########################################### Initial settings for the dashboard ##################################################################
 
@@ -66,20 +72,27 @@ if page == "Intro page":
     except Exception as e:
         st.warning(f"Could not load image 'CitiBike.jpg': {e}")
 
-### Create the dual axis line chart page ###
+### Create the dual-axis line chart page ###
 elif page == 'Weather component and bike usage':
 
-    # Optional: ensure date column is datetime for proper x-axis handling
+    # Ensure date column is datetime
     if 'date' in df.columns:
         try:
             df['date'] = pd.to_datetime(df['date'])
         except Exception:
             pass
 
-    # Line Chart
+    # Make sure temperature is daily (not cumulative)
+    if 'avgTemp' in df.columns:
+        if df['avgTemp'].max() > 100:  # crude check for cumulative data
+            df['avgTemp_daily'] = df['avgTemp'].diff().fillna(df['avgTemp'])
+        else:
+            df['avgTemp_daily'] = df['avgTemp']
+    
+    # Create figure with secondary y-axis
     fig_2 = make_subplots(specs=[[{"secondary_y": True}]])
 
-    # Bike rides (blue)
+    # Daily Bike Rides (left axis)
     fig_2.add_trace(
         go.Scatter(
             x=df['date'],
@@ -90,11 +103,11 @@ elif page == 'Weather component and bike usage':
         secondary_y=False
     )
 
-    # Temperature (red)
+    # Daily Temperature (right axis)
     fig_2.add_trace(
         go.Scatter(
             x=df['date'],
-            y=df['avgTemp'],
+            y=df['avgTemp_daily'],
             name='Daily Temperature',
             line=dict(color='firebrick', width=3)
         ),
@@ -120,16 +133,20 @@ elif page == 'Weather component and bike usage':
         font=dict(size=13)
     )
 
-    # Label second y-axis (temperature)
+    # Label secondary y-axis
     fig_2.update_yaxes(title_text='Average Temperature (°C)', secondary_y=True)
 
     # Show chart
     st.plotly_chart(fig_2, use_container_width=True)
+
+    # Explanatory markdown
     st.markdown(
         "This chart shows there is a clear correlation between bike trips and the temperature. "
-        "As temperature increases so do bike rides; the rise starts around the end of May and doesn't begin to fall until around the start of October."
+        "As temperature increases, so do bike rides; the rise starts around the end of May and doesn't begin to fall until around the start of October."
     )
-    st.markdown("Using this information we can assume a majority of bike shortages occur during this time period.")
+    st.markdown(
+        "Using this information we can assume a majority of bike shortages occur during this time period."
+    )
 
 ### Most Popular Stations Page ###
 elif page == 'Most popular stations':
